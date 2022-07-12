@@ -1,0 +1,7 @@
+(library
+ (name test_css_jane)
+ (libraries
+  css_jane css_parser css_printer compiler-libs.common core ppxlib)
+ (inline_tests)
+ (preprocess
+  (pps ppx_jane)))
