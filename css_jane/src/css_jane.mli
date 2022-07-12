@@ -89,4 +89,5 @@ and Stylesheet : sig
   val to_string_hum : t -> string
   val to_string_minified : t -> string
   val of_string : ?pos:Source_code_position.t -> string -> t
+  val sexp_of_t : t -> Sexp.t
 end

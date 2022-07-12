@@ -183,7 +183,11 @@ module Stylesheet = struct
   let of_string ?pos s =
     (* the parser produces different output depending on if there is 
        a leading space or not.  They're equivalent semantically, but 
-       I can add this to remove ambiguity. *)
+       I can add this to remove ambiguity.
+       
+       If the string input is not a CSS, then it should produce an error - how do we determine if's 
+        CSS file? (use a list of selectors?)
+       if string doesn't begin with a css selector = throw an error*)
     let s = " " ^ s in
     Css_parser.Parser.parse_stylesheet ?pos s
   ;;
