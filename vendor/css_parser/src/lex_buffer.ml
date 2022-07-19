@@ -1,4 +1,4 @@
-(* Based on
+   (* Based on
  * https://github.com/smolkaj/ocaml-parsing/blob/master/src/LexBuffer.ml *)
 
 (** A custom lexbuffer that automatically keeps track of the source location.

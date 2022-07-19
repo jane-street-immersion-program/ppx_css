@@ -2,6 +2,11 @@ open! Core
 
 type 'a with_loc = 'a * Location.t
 
+module Selector : sig 
+  type t 
+  [@@deriving sexp_of]
+end
+ 
 module rec Dimension : sig
   type t =
     | Length
@@ -41,7 +46,7 @@ end
 and At_rule : sig
   type t =
     { name : string with_loc
-    ; prelude : Component_value.t with_loc list with_loc
+    ; prelude : Selector.t with_loc list with_loc
     ; block : Brace_block.t
     ; loc : Location.t
     }
@@ -69,7 +74,7 @@ end
 
 and Style_rule : sig
   type t =
-    { prelude : Component_value.t with_loc list with_loc
+    { prelude : Selector.t with_loc list with_loc
     ; block : Declaration_list.t
     ; loc : Location.t
     }

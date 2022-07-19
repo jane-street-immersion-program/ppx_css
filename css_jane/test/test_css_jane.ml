@@ -90,7 +90,7 @@ let of_string ?pos s =
     Stdio.print_s result;
     [%expect{|
       ((Style_rule
-        ((prelude ((Ident label) (Delim ,) (Ident ul)))
+        ((prelude ((Ident label) (Delim ,)  (Hash ul)))
          (block
           ((Declaration
             ((name border)
@@ -103,7 +103,7 @@ let of_string ?pos s =
 
     let%expect_test "Test CSS Paragraphs" = 
     let result = Css_jane.Stylesheet.sexp_of_t (Css_jane.Stylesheet.of_string 
-    {| #para1 {
+    {|#para1 {
       text-align: center;
       color: red;
     }
@@ -159,23 +159,3 @@ let of_string ?pos s =
           Raised at Css_parser__Lexer.parse in file "vendor/css_parser/src/lexer.ml", line 346, characters 9-39
           Called from Test_css_jane.(fun) in file "css_jane/test/test_css_jane.ml", line 149, characters 47-88
           Called from Expect_test_collector.Make.Instance_io.exec in file "collector/expect_test_collector.ml", line 247, characters 12-19 |}] 
-
-
-          let%expect_test "Test Sibling Slector Example" = 
-          let result = Css_jane.Stylesheet.sexp_of_t (Css_jane.Stylesheet.of_string 
-          "999") in 
-          Stdio.print_s result;
-          [%expect{|
-            ((Style_rule
-              ((prelude ((Ident label) (Delim ,) (Ident ul)))
-               (block
-                ((Declaration
-                  ((name border)
-                   (value ((Float_dimension (1 px Length)) (Ident solid) (Hash cecfd5)))
-                   (important false)))
-                 (Declaration
-                  ((name border-radius) (value ((Float_dimension (6 px Length))))
-≈      
-      
-
-    
