@@ -50,7 +50,7 @@ let of_string ?pos s =
     [%expect{| () |}] 
 
     let%expect_test "Test Simple CSS" = 
-    let result = Css_jane.Stylesheet.sexp_of_t (Css_jane.Stylesheet.of_string " a { } ") in 
+    let result = Css_jane.Stylesheet.sexp_of_t (Css_jane.Stylesheet.of_string " a {yes} ") in 
     Stdio.print_s result;
     [%expect{|
       ((Style_rule ((prelude ((Ident a))) (block ())))) |}] 

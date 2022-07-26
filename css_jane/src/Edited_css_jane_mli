@@ -2,8 +2,7 @@ open! Core
 
 type 'a with_loc = 'a * Location.t
 
-
-module rec Dimension : sig
+module Dimension : sig
   type t =
     | Length
     | Angle
@@ -12,7 +11,7 @@ module rec Dimension : sig
   [@@deriving sexp_of]
 end
 
-and Component_value : sig
+module Component_value : sig
   type t =
     | Paren_block of t with_loc list
     | Bracket_block of t with_loc list
@@ -31,6 +30,22 @@ and Component_value : sig
   [@@deriving sexp_of]
 end
 
+module Selector : sig 
+  type t 
+  [@@deriving sexp_of]
+  val of_component_values : Component_value.t with_loc list -> t with_loc list
+end
+
+module rec Declaration : sig
+  type t =
+    { name : string with_loc
+    ; value : Component_value.t with_loc list with_loc
+    ; important : bool with_loc
+    ; loc : Location.t
+    }
+  [@@deriving sexp_of]
+end
+
 and Brace_block : sig
   type t =
     | Empty
@@ -42,18 +57,8 @@ end
 and At_rule : sig
   type t =
     { name : string with_loc
-    ; prelude : Component_value.t with_loc list with_loc
+    ; prelude : Selector.t with_loc list with_loc
     ; block : Brace_block.t
-    ; loc : Location.t
-    }
-  [@@deriving sexp_of]
-end
-
-and Declaration : sig
-  type t =
-    { name : string with_loc
-    ; value : Component_value.t with_loc list with_loc
-    ; important : bool with_loc
     ; loc : Location.t
     }
   [@@deriving sexp_of]
@@ -70,7 +75,7 @@ end
 
 and Style_rule : sig
   type t =
-    { prelude : Component_value.t with_loc list with_loc
+    { prelude : Selector.t with_loc list with_loc
     ; block : Declaration_list.t
     ; loc : Location.t
     }
@@ -90,4 +95,5 @@ and Stylesheet : sig
   val to_string_hum : t -> string
   val to_string_minified : t -> string
   val of_string : ?pos:Source_code_position.t -> string -> t
+  val sexp_of_t : t -> Sexp.t
 end
